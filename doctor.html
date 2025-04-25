@@ -16,6 +16,7 @@
             <th>Email</th>
             <th>Phone number</th>
             <th>Program</th>
+            <th>Actions</th>
         </thead>
         <tbody></tbody>
     </table>
@@ -41,10 +42,43 @@
             <option value="TB">TB</option>
           </datalist>
           <br>
-          <button type="submit" onclick="createPatient()" class="btn btn-primary">Create</button>
+          <button type="submit" onclick="createPatient()" class="btn btn-primary">Create</button><br>
+          </div>
         </div>
 
+        <div id="editModal" class="modal">
+
+          <!-- Edit patient modal -->
+          <div class="modal-content">
+            <span class="close">&times;</span>
+            <label for="name">Name</label>
+            <input type="text" id="name" required>
+            <label for="email">Email</label>
+            <input type="text" id="email" required>
+            <label for="phone">Phone number</label>
+            <input type="text" id="phone" required>
+            <label for="program">Program</label>
+            <input type="text" list="programs" id="program" required>
+            <datalist id="programs">
+              <option value="HIV">HIV</option>
+              <option value="Malaria">Malaria</option>
+              <option value="TB">TB</option>
+            </datalist>
+            <br>
+            <button type="submit" onclick="updatePatient(editPatientID)" class="btn btn-primary">Update</button><br>
+          </div>
+        </div>
+
+      <div id="deleteModal" class="modal">
+
+        <!-- Delete patient modal -->
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <p>This action cannot be undone.</p>
+          <button type="submit" onclick="deletePatient(deleteID)" class="btn btn-danger">Delete</button><br>
+        </div>
       </div>
+
     <script src="doctor.js"></script>
 </body>
 </html>

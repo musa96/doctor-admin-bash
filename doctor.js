@@ -1,60 +1,76 @@
 var current_page = 1;
 var records_per_page = 5;
 var create_modal = document.getElementById("createModal");
+var delete_modal = document.getElementById("deleteModal");
+var edit_modal = document.getElementById("editModal");
 var span = document.getElementsByClassName("close")[0];
+var span1 = document.getElementsByClassName("close")[1];
+var span2 = document.getElementsByClassName("close")[2];
 var search_mode = false;
 var search_results = [];
+var deleteID;
+var editPatientID;
 
 var patientDB = [
-    {name: "Monica",
+    {id: 1,
+    name: "Monica",
     email: "monica@mail.com",
     phone: "222-555-777",
     program: "Malaria"
     },
-    {name: "John Doe",
-        email: "johndoe@mail.com",
-        phone: "222-123-870",
-        program: "HIV",
+    {id: 2,
+    name: "John Doe",
+    email: "johndoe@mail.com",
+    phone: "222-123-870",
+    program: "HIV",
     },
-    {name: "Diane H. Anderson",
-        email: "dianeanderson@mail.com",
-        phone: "222-888-445",
-        program: "TB",
+    {id: 3,
+    name: "Diane H. Anderson",
+    email: "dianeanderson@mail.com",
+    phone: "222-888-445",
+    program: "TB",
     },
-    {name: "Aïchatou Bitrus",
-        email: "aichatoubitrus@gmail.com",
-        phone: "288-345-122",
-        program: "TB"
+    {id: 4,
+    name: "Aïchatou Bitrus",
+    email: "aichatoubitrus@gmail.com",
+    phone: "288-345-122",
+    program: "TB"
     },
-    {name: "Ogechukwu Omari",
-        email: "ogechukwuomari@gmail.com",
-        phone: "235-214-444",
-        program: "Malaria"
+    {id: 5,
+    name: "Ogechukwu Omari",
+    email: "ogechukwuomari@gmail.com",
+    phone: "235-214-444",
+    program: "Malaria"
     },
-    {name: "Mwayi Okafor",
-        email: "mwayiokafor@gmail.com",
-        phone: "900-450-567",
-        program: "HIV"
+    {id: 6,
+    name: "Mwayi Okafor",
+    email: "mwayiokafor@gmail.com",
+    phone: "900-450-567",
+    program: "HIV"
     },
-    {name: "Ebrima Ihejirika",
-        email: "ebrimaihejirika@gmail.com",
-        phone: "930-560-700",
-        program: "HIV"
+    {id: 7,
+    name: "Ebrima Ihejirika",
+    email: "ebrimaihejirika@gmail.com",
+    phone: "930-560-700",
+    program: "HIV"
     },
-    {name: "Ifunanya Pretorius",
-        email: "ifunanyapretorius@gmail.com",
-        phone: "777-224-313",
-        program: "TB"
+    {id: 8,
+    name: "Ifunanya Pretorius",
+    email: "ifunanyapretorius@gmail.com",
+    phone: "777-224-313",
+    program: "TB"
     },
-    {name: "Mamadu Okeke",
-        email: "mamaduokeke@gmail.com",
-        phone: "777-344-567",
-        program: "TB"
+    {id: 9,
+    name: "Mamadu Okeke",
+    email: "mamaduokeke@gmail.com",
+    phone: "777-344-567",
+    program: "TB"
     },
-    {name: "Jummai Obama",
-        email: "jummaiobama@gmail.com",
-        phone: "777-212-453",
-        program: "TB"
+    {id: 10,
+    name: "Jummai Obama",
+    email: "jummaiobama@gmail.com",
+    phone: "777-212-453",
+    program: "TB"
     },
 ]
 
@@ -105,7 +121,7 @@ function changePage(page) {
 
 function numPages()
 {
-    var numberOfPages = 1;
+    var numberOfPages;
 
     if (search_mode == false) {
         numberOfPages = Math.ceil(patientDB.length / records_per_page);
@@ -115,8 +131,7 @@ function numPages()
     return numberOfPages;
 }
 
-function search()
-{
+function search() {
     var search_string = document.getElementById("search_text").value;
     var filter = search_string.toUpperCase();
 
@@ -128,9 +143,53 @@ function search()
             search_results.push(patientDB[i]);
         }
     }
-    search_mode = search_results.length != 0 ? true : false;
+    search_mode = search_string.length != 0 ? true : false;
     current_page = 1;
     changePage(1);
+}
+
+function findPatientById(patientId) {
+    return patientDB.findIndex(e => e.id == patientId);
+}
+
+function confirmDeletePatient(patientId) {
+    deleteID = patientId;
+    delete_modal.style.display = "block";
+}
+
+function deletePatient(patientId) {
+    console.log("Deleting patient ID #" + patientId);
+    var index = findPatientById(patientId);
+    if (index > -1) {
+        patientDB.splice(index, 1);
+    }
+    if (current_page > numPages()) {
+        current_page = numPages();
+    }
+    changePage(current_page);
+    delete_modal.style.display = "none";
+}
+
+function updatePatient(patientId) {
+    var index = findPatientById(patientId);
+    patientDB[index].name = edit_modal.querySelector("#name").value;
+    patientDB[index].email = edit_modal.querySelector("#email").value;
+    patientDB[index].phone = edit_modal.querySelector("#phone").value;
+    patientDB[index].program = edit_modal.querySelector("#program").value;
+    changePage(current_page);
+    edit_modal.style.display = "none";
+}
+
+function editPatientModal(patientId) {
+    editPatientID = patientId;
+    var index = findPatientById(editPatientID);
+    if (index > -1) {
+        edit_modal.querySelector("#name").value = patientDB[index].name;
+        edit_modal.querySelector("#email").value = patientDB[index].email;
+        edit_modal.querySelector("#phone").value = patientDB[index].phone;
+        edit_modal.querySelector("#program").value = patientDB[index].program;
+    }
+    edit_modal.style.display = "block";
 }
 
 function addPatient(element, tbl) {
@@ -147,14 +206,23 @@ function addPatient(element, tbl) {
 
     var program = row0.insertCell(-1);
     program.innerHTML = element.program;
+
+    var actions = row0.insertCell(-1);
+    actions.innerHTML = "<button class=\"btn btn-secondary\" id=\"edit\" onClick=\"editPatientModal(" + element.id + ")\">Edit</button>" +
+                        " <button class=\"btn btn-danger\" id=\"delete\" onClick=\"confirmDeletePatient(" + element.id + ")\">Delete</button>";
 }
 
 function newPatient() {
+    create_modal.querySelector("#name").value = "";
+    create_modal.querySelector("#email").value = "";
+    create_modal.querySelector("#phone").value = "";
+    create_modal.querySelector("#program").value = "";
     create_modal.style.display = "block";
 }
 
 function createPatient() {
     let newpatient = {
+        id: Math.random().toString().split('.')[1],
         name: create_modal.querySelector("#name").value,
         email: create_modal.querySelector("#email").value,
         phone: create_modal.querySelector("#phone").value,
@@ -170,6 +238,14 @@ function createPatient() {
 
 span.onclick = function() {
     create_modal.style.display = "none";
+}
+
+span1.onclick = function() {
+    edit_modal.style.display = "none";
+}
+
+span2.onclick = function() {
+    delete_modal.style.display = "none";
 }
 
 window.onload = function() {
