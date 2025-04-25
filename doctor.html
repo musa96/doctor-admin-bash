@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="doctor.css">
+    <title>Malaria Program</title>
+</head>
+<body>
+    <input type="text" placeholder="Search...">
+    <button type="submit"><i class="fa fa-search"></i></button>
+    <table class="table" id="programlist">
+        <thead>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone number</th>
+            <th>Program</th>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <button id="prevbutton" onclick="prevPage()">Previous</button>
+    <button id="nextbutton" onclick="nextPage()">Next</button>
+    <button id="newpatient" onclick="newPatient()">New Patient</button>
+    <div id="createModal" class="modal">
+
+        <!-- Create patient modal -->
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <label for="name">Name</label>
+          <input type="text" id="name" required>
+          <label for="email">Email</label>
+          <input type="text" id="email" required>
+          <label for="phone">Phone number</label>
+          <input type="text" id="phone" required>
+          <label for="program">Program</label>
+          <input type="text" list="programs" id="program" required>
+          <datalist id="programs">
+            <option value="HIV">HIV</option>
+            <option value="Malaria">Malaria</option>
+            <option value="TB">TB</option>
+          </datalist>
+          <br>
+          <button type="submit" onclick="createPatient()" class="btn btn-primary">Create</button>
+        </div>
+
+      </div>
+    <script src="doctor.js"></script>
+</body>
+</html>
