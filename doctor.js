@@ -2,6 +2,8 @@ var current_page = 1;
 var records_per_page = 5;
 var create_modal = document.getElementById("createModal");
 var span = document.getElementsByClassName("close")[0];
+var search_mode = false;
+var search_results = [];
 
 var patientDB = [
     {name: "Monica",
@@ -77,9 +79,17 @@ function changePage(page) {
 
     tbl.innerHTML = "";
 
-    for (var i = (page-1) * records_per_page; i < (page * records_per_page); i++) {
-        if (i < patientDB.length)
-            addPatient(patientDB[i], tbl)
+    if (search_mode == false) {
+        for (var i = (page-1) * records_per_page; i < (page * records_per_page); i++) {
+            if (i < patientDB.length)
+                addPatient(patientDB[i], tbl)
+        }
+    } else {
+        for (var i = (page-1) * records_per_page; i < (page * records_per_page); i++) {
+            if (i < search_results.length) {
+                addPatient(search_results[i], tbl)
+            }
+        }
     }
     if (page == 1) {
         previousbutton.disabled = true;
@@ -95,22 +105,47 @@ function changePage(page) {
 
 function numPages()
 {
-    return Math.ceil(patientDB.length / records_per_page);
+    var numberOfPages = 1;
+
+    if (search_mode == false) {
+        numberOfPages = Math.ceil(patientDB.length / records_per_page);
+    } else {
+        numberOfPages = Math.ceil(search_results.length / records_per_page);
+    }
+    return numberOfPages;
+}
+
+function search()
+{
+    var search_string = document.getElementById("search_text").value;
+    var filter = search_string.toUpperCase();
+
+    console.log("Searched for " + "'" + search_string + "'");
+    search_results = [];
+    for(var i = 0; i < patientDB.length; i++) {
+        var txtValue = patientDB[i].name;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            search_results.push(patientDB[i]);
+        }
+    }
+    search_mode = search_results.length != 0 ? true : false;
+    current_page = 1;
+    changePage(1);
 }
 
 function addPatient(element, tbl) {
-    var row0 = tbl.insertRow(-1)
+    var row0 = tbl.insertRow(-1);
 
-    var name = row0.insertCell(-1)
+    var name = row0.insertCell(-1);
     name.innerHTML = element.name;
 
-    var email = row0.insertCell(-1)
+    var email = row0.insertCell(-1);
     email.innerHTML = element.email;
 
-    var phone = row0.insertCell(-1)
+    var phone = row0.insertCell(-1);
     phone.innerHTML = element.phone;
 
-    var program = row0.insertCell(-1)
+    var program = row0.insertCell(-1);
     program.innerHTML = element.program;
 }
 
@@ -127,8 +162,9 @@ function createPatient() {
     }
     create_modal.style.display = "none";
 
+    search_mode = false;
     patientDB.push(newpatient)
-    current_page = numPages()
+    current_page = numPages();
     changePage(current_page)
 }
 
@@ -137,5 +173,5 @@ span.onclick = function() {
 }
 
 window.onload = function() {
-    changePage(1)
+    changePage(1);
 }
