@@ -128,7 +128,8 @@ function createPatient() {
     create_modal.style.display = "none";
 
     patientDB.push(newpatient)
-    changePage(numPages())
+    current_page = numPages()
+    changePage(current_page)
 }
 
 span.onclick = function() {
