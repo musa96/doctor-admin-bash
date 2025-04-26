@@ -11,7 +11,7 @@
 <body>
     <h1>Doctor Database Dashboard</h1>
     <input type="text" placeholder="Search..." onkeyup="search()" id="search_text">
-    <table class="table" id="programlist">
+    <table class="table table-striped" id="programlist">
         <thead>
             <th>Name</th>
             <th>Email</th>
@@ -24,8 +24,8 @@
     <button id="prevbutton" onclick="prevPage()">Previous</button>
     <button id="nextbutton" onclick="nextPage()">Next</button>
     <button id="newpatient" onclick="newPatient()">&#43; New Patient</button>
+    <!-- Create patient modal -->
     <div id="createModal" class="modal fade" aria-labelledby="createModalLabel" aria-hidden="true">
-
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -57,8 +57,8 @@
           </div>
         </div>
 
+        <!-- Edit patient modal -->
         <div id="editModal" class="modal fade" aria-labelledby="editModalLabel" aria-hidden="true">
-
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
@@ -90,9 +90,8 @@
             </div>
           </div>
 
+      <!-- Delete patient modal -->
       <div id="deleteModal" class="modal fade" aria-labelledby="deleteModalLabel" aria-hidden="true">
-
-        <!-- Delete patient modal -->
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
