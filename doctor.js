@@ -3,9 +3,6 @@ var records_per_page = 5;
 var create_modal = document.getElementById("createModal");
 var delete_modal = document.getElementById("deleteModal");
 var edit_modal = document.getElementById("editModal");
-var span = document.getElementsByClassName("close")[0];
-var span1 = document.getElementsByClassName("close")[1];
-var span2 = document.getElementsByClassName("close")[2];
 var search_mode = false;
 var search_results = [];
 var deleteID;
@@ -153,8 +150,10 @@ function findPatientById(patientId) {
 }
 
 function confirmDeletePatient(patientId) {
+    var modal = new bootstrap.Modal(delete_modal);
+
     deleteID = patientId;
-    delete_modal.style.display = "block";
+    modal.show();
 }
 
 function deletePatient(patientId) {
@@ -167,7 +166,6 @@ function deletePatient(patientId) {
         current_page = numPages();
     }
     changePage(current_page);
-    delete_modal.style.display = "none";
 }
 
 function updatePatient(patientId) {
@@ -177,19 +175,20 @@ function updatePatient(patientId) {
     patientDB[index].phone = edit_modal.querySelector("#phone").value;
     patientDB[index].program = edit_modal.querySelector("#program").value;
     changePage(current_page);
-    edit_modal.style.display = "none";
 }
 
 function editPatientModal(patientId) {
+    var modal = new bootstrap.Modal(edit_modal);
+    var index = findPatientById(patientId);
+
     editPatientID = patientId;
-    var index = findPatientById(editPatientID);
     if (index > -1) {
         edit_modal.querySelector("#name").value = patientDB[index].name;
         edit_modal.querySelector("#email").value = patientDB[index].email;
         edit_modal.querySelector("#phone").value = patientDB[index].phone;
         edit_modal.querySelector("#program").value = patientDB[index].program;
     }
-    edit_modal.style.display = "block";
+    modal.show();
 }
 
 function addPatient(element, tbl) {
@@ -213,11 +212,12 @@ function addPatient(element, tbl) {
 }
 
 function newPatient() {
+    var modal = new bootstrap.Modal(create_modal);
     create_modal.querySelector("#name").value = "";
     create_modal.querySelector("#email").value = "";
     create_modal.querySelector("#phone").value = "";
     create_modal.querySelector("#program").value = "";
-    create_modal.style.display = "block";
+    modal.show();
 }
 
 function createPatient() {
@@ -228,24 +228,11 @@ function createPatient() {
         phone: create_modal.querySelector("#phone").value,
         program: create_modal.querySelector("#program").value
     }
-    create_modal.style.display = "none";
 
     search_mode = false;
     patientDB.push(newpatient)
     current_page = numPages();
     changePage(current_page)
-}
-
-span.onclick = function() {
-    create_modal.style.display = "none";
-}
-
-span1.onclick = function() {
-    edit_modal.style.display = "none";
-}
-
-span2.onclick = function() {
-    delete_modal.style.display = "none";
 }
 
 window.onload = function() {

@@ -22,61 +22,91 @@
     </table>
     <button id="prevbutton" onclick="prevPage()">Previous</button>
     <button id="nextbutton" onclick="nextPage()">Next</button>
-    <button id="newpatient" onclick="newPatient()">New Patient</button>
-    <div id="createModal" class="modal">
+    <button id="newpatient" onclick="newPatient()">&#43; New Patient</button>
+    <div id="createModal" class="modal fade" aria-labelledby="createModalLabel" aria-hidden="true">
 
-        <!-- Create patient modal -->
-        <div class="modal-content">
-          <span class="close">&times;</span>
-          <label for="name">Name</label>
-          <input type="text" id="name" required>
-          <label for="email">Email</label>
-          <input type="text" id="email" required>
-          <label for="phone">Phone number</label>
-          <input type="text" id="phone" required>
-          <label for="program">Program</label>
-          <input type="text" list="programs" id="program" required>
-          <datalist id="programs">
-            <option value="HIV">HIV</option>
-            <option value="Malaria">Malaria</option>
-            <option value="TB">TB</option>
-          </datalist>
-          <br>
-          <button type="submit" onclick="createPatient()" class="btn btn-primary">Create</button><br>
-          </div>
-        </div>
-
-        <div id="editModal" class="modal">
-
-          <!-- Edit patient modal -->
+        <div class="modal-dialog">
           <div class="modal-content">
-            <span class="close">&times;</span>
-            <label for="name">Name</label>
-            <input type="text" id="name" required>
-            <label for="email">Email</label>
-            <input type="text" id="email" required>
-            <label for="phone">Phone number</label>
-            <input type="text" id="phone" required>
-            <label for="program">Program</label>
-            <input type="text" list="programs" id="program" required>
-            <datalist id="programs">
-              <option value="HIV">HIV</option>
-              <option value="Malaria">Malaria</option>
-              <option value="TB">TB</option>
-            </datalist>
-            <br>
-            <button type="submit" onclick="updatePatient(editPatientID)" class="btn btn-primary">Update</button><br>
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="createModalLabel">Create Patient</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-3">
+                  <label for="name" class="form-label">Name</label>
+                  <input type="text" class="form-control" id="name" required>
+                  <label for="email" class="form-label">Email</label>
+                  <input type="email" class="form-control" id="email" required>
+                  <label for="phone" class="form-label">Phone number</label>
+                  <input type="text" class="form-control" id="phone" required>
+                  <label for="program" class="form-label">Program</label>
+                  <input type="text" class="form-control" list="programs" id="program" required>
+                  <datalist id="programs">
+                    <option value="HIV">HIV</option>
+                    <option value="Malaria">Malaria</option>
+                    <option value="TB">TB</option>
+                  </datalist>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" data-bs-dismiss="modal" class="btn btn-secondary">Close</button>
+              <button type="button" data-bs-dismiss="modal" onclick="createPatient()" class="btn btn-primary">Create</button><br>
+            </div>
+            </div>
           </div>
         </div>
 
-      <div id="deleteModal" class="modal">
+        <div id="editModal" class="modal fade" aria-labelledby="editModalLabel" aria-hidden="true">
+
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="editModalLabel">Edit Patient</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name" required>
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" required>
+                    <label for="phone" class="form-label">Phone number</label>
+                    <input type="text" class="form-control" id="phone" required>
+                    <label for="program" class="form-label">Program</label>
+                    <input type="text" class="form-control" list="programs" id="program" required>
+                    <datalist id="programs">
+                      <option value="HIV">HIV</option>
+                      <option value="Malaria">Malaria</option>
+                      <option value="TB">TB</option>
+                    </datalist>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" data-bs-dismiss="modal" class="btn btn-secondary">Close</button>
+                <button type="button" data-bs-dismiss="modal" onclick="updatePatient(editPatientID)" class="btn btn-primary">Save changes</button><br>
+              </div>
+              </div>
+            </div>
+          </div>
+
+      <div id="deleteModal" class="modal fade" aria-labelledby="deleteModalLabel" aria-hidden="true">
 
         <!-- Delete patient modal -->
-        <div class="modal-content">
-          <span class="close">&times;</span>
-          <p>This action cannot be undone.</p>
-          <button type="submit" onclick="deletePatient(deleteID)" class="btn btn-danger">Delete</button><br>
-        </div>
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="deleteModalLabel">Delete Patient?</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>This action cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" data-bs-dismiss="modal" class="btn btn-secondary">Close</button>
+              <button type="button" data-bs-dismiss="modal" onclick="deletePatient(deleteID)" class="btn btn-danger">Delete</button>
+            </div>
+            </div>
+          </div>
       </div>
 
     <script src="doctor.js"></script>
