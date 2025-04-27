@@ -1,13 +1,21 @@
+// Current page
 var current_page = 1;
+// Number of records displayer per page
 var records_per_page = 5;
+// Modals
 var create_modal = document.getElementById("createModal");
 var delete_modal = document.getElementById("deleteModal");
 var edit_modal = document.getElementById("editModal");
+// Are we in search mode?
 var search_mode = false;
+// Search results populated by the input from the search bar
 var search_results = [];
+// Which patient to delete?
 var deleteID;
+// Which patient to edit?
 var editPatientID;
 
+// Patient records
 var patientDB = [
     {id: 1,
     name: "Monica",
@@ -71,6 +79,7 @@ var patientDB = [
     },
 ]
 
+// Goes to the previous page
 function prevPage() {
     if (current_page > 1) {
         current_page--;
@@ -78,6 +87,7 @@ function prevPage() {
     }
 }
 
+// Goes to the next page
 function nextPage() {
     if (current_page < numPages()) {
         current_page++;
@@ -85,6 +95,7 @@ function nextPage() {
     }
 }
 
+// Updates the table with specified page
 function changePage(page) {
     var tbl = document.getElementById("programlist").getElementsByTagName("tbody")[0];
     var previousbutton = document.getElementById("prevbutton");
@@ -116,6 +127,7 @@ function changePage(page) {
     }
 }
 
+// Gets number of pages
 function numPages()
 {
     var numberOfPages;
@@ -128,6 +140,7 @@ function numPages()
     return numberOfPages;
 }
 
+// Searches patient records
 function search() {
     var search_string = document.getElementById("search_text").value;
     var filter = search_string.toUpperCase();
@@ -145,10 +158,12 @@ function search() {
     changePage(1);
 }
 
+// Find patient by ID
 function findPatientById(patientId) {
     return patientDB.findIndex(e => e.id == patientId);
 }
 
+// Brings up the delete patient modal
 function confirmDeletePatient(patientId) {
     var modal = new bootstrap.Modal(delete_modal);
 
@@ -156,6 +171,7 @@ function confirmDeletePatient(patientId) {
     modal.show();
 }
 
+// Deletes a patient from the records
 function deletePatient(patientId) {
     console.log("Deleting patient ID #" + patientId);
     var index = findPatientById(patientId);
@@ -168,6 +184,7 @@ function deletePatient(patientId) {
     changePage(current_page);
 }
 
+// Updates a patient in the record
 function updatePatient(patientId) {
     var index = findPatientById(patientId);
     patientDB[index].name = edit_modal.querySelector("#name").value;
@@ -177,6 +194,7 @@ function updatePatient(patientId) {
     changePage(current_page);
 }
 
+// Brings up the edit patient modal
 function editPatientModal(patientId) {
     var modal = new bootstrap.Modal(edit_modal);
     var index = findPatientById(patientId);
@@ -191,6 +209,7 @@ function editPatientModal(patientId) {
     modal.show();
 }
 
+// Populates the table with patients from the record
 function addPatient(element, tbl) {
     var row0 = tbl.insertRow(-1);
 
@@ -220,6 +239,7 @@ function newPatient() {
     modal.show();
 }
 
+// Creates a new patient in the record
 function createPatient() {
     let newpatient = {
         id: Math.random().toString().split('.')[1],
